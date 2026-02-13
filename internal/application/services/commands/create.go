@@ -23,6 +23,9 @@ type CreateServiceInput struct {
 	ID                                string `json:"id" validate:"required,notblank"`
 	SheetID                           string `json:"sheetId" validate:"required,notblank"`
 	RowID                             string `json:"rowId" validate:"required,notblank"`
+	ColumnPostulantSuitableId         string `json:"columnPostulantSuitableId"`
+	ColumnSendMessageId               string `json:"columnSendMessageId"`
+	ColumnSendDateTimeId              string `json:"columnSendDateTimeId"`
 	ColumnPostulantResponseId         string `json:"columnPostulantResponseId" validate:"required,notblank"`
 	ColumnPostulantDateTimeResponseId string `json:"columnPostulantDateTimeResponseId" validate:"required,notblank"`
 	ColumnPostulantConfirmedId        string `json:"columnPostulantConfirmedId" validate:"required,notblank"`
@@ -82,6 +85,9 @@ func (svc *CreateService) Execute(ctx context.Context, input *CreateServiceInput
 		CompositeKey:                      compositeKey,
 		SheetID:                           input.SheetID,
 		RowID:                             input.RowID,
+		ColumnPostulantSuitableId:         input.ColumnPostulantSuitableId,
+		ColumnSendMessageId:               input.ColumnSendMessageId,
+		ColumnSendDateTimeId:              input.ColumnSendDateTimeId,
 		ColumnPostulantResponseId:         input.ColumnPostulantResponseId,
 		ColumnPostulantDateTimeResponseId: input.ColumnPostulantDateTimeResponseId,
 		ColumnPostulantConfirmedId:        input.ColumnPostulantConfirmedId,

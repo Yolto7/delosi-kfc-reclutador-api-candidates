@@ -5,6 +5,9 @@ type Candidate struct {
 	CompositeKey                      string `json:"compositeKey" dynamodbav:"compositeKey"`
 	SheetID                           string `json:"sheetId" dynamodbav:"sheetId"`
 	RowID                             string `json:"rowId" dynamodbav:"rowId"`
+	ColumnPostulantSuitableId         string `json:"columnPostulantSuitableId" dynamodbav:"columnPostulantSuitableId"`
+	ColumnSendMessageId               string `json:"columnSendMessageId" dynamodbav:"columnSendMessageId"`
+	ColumnSendDateTimeId              string `json:"columnSendDateTimeId" dynamodbav:"columnSendDateTimeId"`
 	ColumnPostulantResponseId         string `json:"columnPostulantResponseId" dynamodbav:"columnPostulantResponseId"`
 	ColumnPostulantDateTimeResponseId string `json:"columnPostulantDateTimeResponseId" dynamodbav:"columnPostulantDateTimeResponseId"`
 	ColumnPostulantConfirmedId        string `json:"columnPostulantConfirmedId" dynamodbav:"columnPostulantConfirmedId"`
