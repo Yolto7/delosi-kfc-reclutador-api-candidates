@@ -20,11 +20,11 @@ import (
 
 // CreateServiceInput represents the input for candidate create operation
 type CreateServiceInput struct {
-	ID           string `json:"id" validate:"required,notblank"`
-	DocumentID   string `json:"documentId" validate:"required,notblank"`
-	DocumentName string `json:"documentName" validate:"required,notblank"`
-	SheetID      string `json:"sheetId" validate:"required,notblank"`
-	SheetName    string `json:"sheetName" validate:"required,notblank"`
+	ID                                string `json:"id" validate:"required,notblank"`
+	SheetID                           string `json:"sheetId" validate:"required,notblank"`
+	ColumnPostulantResponseId         string `json:"columnPostulantResponseId" validate:"required,notblank"`
+	ColumnPostulantDateTimeResponseId string `json:"columnPostulantDateTimeResponseId" validate:"required,notblank"`
+	ColumnPostulantConfirmedId        string `json:"columnPostulantConfirmedId" validate:"required,notblank"`
 }
 
 // CreateServiceOutput represents the output of candidate create operation
@@ -65,7 +65,7 @@ func NewCreateService(cfg CreateServiceConfig) *CreateService {
 // Execute performs an optimized create operation on candidate
 // Returns error if validation fails or repository operations fail
 func (svc *CreateService) Execute(ctx context.Context, input *CreateServiceInput) (*CreateServiceOutput, error) {
-	compositeKey := fmt.Sprintf("%s#%s", input.ID, input.DocumentName)
+	compositeKey := fmt.Sprintf("%s#%s", input.ID, input.SheetID)
 
 	exists, err := svc.candidateRepository.GetByCompositeKey(ctx, compositeKey)
 	if err != nil {
@@ -77,15 +77,15 @@ func (svc *CreateService) Execute(ctx context.Context, input *CreateServiceInput
 	}
 
 	candidate := &entities.Candidate{
-		ID:           input.ID,
-		CompositeKey: compositeKey,
-		DocumentID:   input.DocumentID,
-		DocumentName: input.DocumentName,
-		SheetID:      input.SheetID,
-		SheetName:    input.SheetName,
-		CreatedAt:    pkgIUtils.NowDateTime("America/Lima"),
-		CreatedBy:    constants.SYSTEM_USER,
-		Deleted:      false,
+		ID:                                input.ID,
+		CompositeKey:                      compositeKey,
+		SheetID:                           input.SheetID,
+		ColumnPostulantResponseId:         input.ColumnPostulantResponseId,
+		ColumnPostulantDateTimeResponseId: input.ColumnPostulantDateTimeResponseId,
+		ColumnPostulantConfirmedId:        input.ColumnPostulantConfirmedId,
+		CreatedAt:                         pkgIUtils.NowDateTime("America/Lima"),
+		CreatedBy:                         constants.SYSTEM_USER,
+		Deleted:                           false,
 	}
 
 	if err := svc.candidateRepository.Create(ctx, candidate); err != nil {

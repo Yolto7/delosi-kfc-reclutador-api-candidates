@@ -12,11 +12,11 @@ type GetByIDServiceInput struct {
 }
 
 type GetByIDServiceOutput struct {
-	ID           string `json:"id"`
-	DocumentID   string `json:"documentId"`
-	DocumentName string `json:"documentName"`
-	SheetID      string `json:"sheetId"`
-	SheetName    string `json:"sheetName"`
+	ID                                string `json:"id"`
+	SheetID                           string `json:"sheetId"`
+	ColumnPostulantResponseId         string `json:"columnPostulantResponseId"`
+	ColumnPostulantDateTimeResponseId string `json:"columnPostulantDateTimeResponseId"`
+	ColumnPostulantConfirmedId        string `json:"columnPostulantConfirmedId"`
 }
 
 type GetByIDService struct {
@@ -43,10 +43,10 @@ func (svc *GetByIDService) Execute(ctx context.Context, input GetByIDServiceInpu
 	}
 
 	return &GetByIDServiceOutput{
-		ID:           candidate.ID,
-		DocumentID:   candidate.DocumentID,
-		DocumentName: candidate.DocumentName,
-		SheetID:      candidate.SheetID,
-		SheetName:    candidate.SheetName,
+		ID:                                candidate.ID,
+		SheetID:                           candidate.SheetID,
+		ColumnPostulantResponseId:         candidate.ColumnPostulantResponseId,
+		ColumnPostulantDateTimeResponseId: candidate.ColumnPostulantDateTimeResponseId,
+		ColumnPostulantConfirmedId:        candidate.ColumnPostulantConfirmedId,
 	}, nil
 }

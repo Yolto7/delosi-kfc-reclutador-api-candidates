@@ -1,12 +1,12 @@
 package entities
 
 type Candidate struct {
-	ID           string `json:"id" dynamodbav:"id"`
-	CompositeKey string `json:"compositeKey" dynamodbav:"compositeKey"`
-	DocumentID   string `json:"documentId" dynamodbav:"documentId"`
-	DocumentName string `json:"documentName" dynamodbav:"documentName"`
-	SheetID      string `json:"sheetId" dynamodbav:"sheetId"`
-	SheetName    string `json:"sheetName" dynamodbav:"sheetName"`
+	ID                                string `json:"id" dynamodbav:"id"`
+	CompositeKey                      string `json:"compositeKey" dynamodbav:"compositeKey"`
+	SheetID                           string `json:"sheetId" dynamodbav:"sheetId"`
+	ColumnPostulantResponseId         string `json:"columnPostulantResponseId" dynamodbav:"columnPostulantResponseId"`
+	ColumnPostulantDateTimeResponseId string `json:"columnPostulantDateTimeResponseId" dynamodbav:"columnPostulantDateTimeResponseId"`
+	ColumnPostulantConfirmedId        string `json:"columnPostulantConfirmedId" dynamodbav:"columnPostulantConfirmedId"`
 
 	CreatedAt string  `json:"createdAt" dynamodbav:"createdAt"`
 	CreatedBy string  `json:"createdBy" dynamodbav:"createdBy"`

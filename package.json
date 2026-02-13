@@ -1,5 +1,5 @@
 {
-  "name": "@bk-reclutador/api-candidates",
+  "name": "@kfc-recruiter/api-candidates",
   "devDependencies": {
     "serverless-deployment-bucket": "^1.6.0",
     "serverless-dotenv-plugin": "^6.0.0",

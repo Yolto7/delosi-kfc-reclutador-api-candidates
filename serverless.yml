@@ -3,7 +3,7 @@ frameworkVersion: "3"
 
 custom:
   stage: ${opt:stage, "dev"}
-  prefix: bk-rec
+  prefix: kfc-rec
   stackName: candidates
   prefixName: ${self:custom.prefix}-${self:custom.stage}
   prefixLambdaName: ${self:custom.prefixName}-ld-${self:custom.stackName}
@@ -38,9 +38,9 @@ provider:
   architecture: x86_64
   apiGateway:
     restApiId:
-      Fn::ImportValue: MainApiGatewayId
+      Fn::ImportValue: KFCMainApiGatewayId
     restApiRootResourceId:
-      Fn::ImportValue: MainApiGatewayRootResourceId
+      Fn::ImportValue: KFCMainApiGatewayRootResourceId
   deploymentBucket:
     name: ${self:custom.appBucketShared}
   stackTags:
@@ -60,11 +60,11 @@ provider:
             - dynamodb:DeleteItem
           Resource:
             - Fn::ImportValue:
-                Fn::Sub: CandidatesTableArn
+                Fn::Sub: KFCCandidatesTableArn
             - !Sub
               - "${PREFIX}/index/*"
               - PREFIX: !ImportValue
-                  Fn::Sub: CandidatesTableArn
+                  Fn::Sub: KFCCandidatesTableArn
 
 plugins:
   - serverless-deployment-bucket
