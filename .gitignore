@@ -1,0 +1,7 @@
+bin
+.serverless
+node_modules
+ffmpeg-layer
+.env
+.env.*
+pb

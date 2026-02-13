@@ -1,0 +1,103 @@
+service: ${self:custom.serviceName}
+frameworkVersion: "3"
+
+custom:
+  stage: ${opt:stage, "dev"}
+  prefix: bk-rec
+  stackName: candidates
+  prefixName: ${self:custom.prefix}-${self:custom.stage}
+  prefixLambdaName: ${self:custom.prefixName}-ld-${self:custom.stackName}
+  serviceName: ${self:custom.prefixName}-st-${self:custom.stackName}
+  roleName: ${self:custom.prefixName}-role-${self:custom.stackName}
+  appBucketShared: ${self:custom.prefixName}-bucket-app-shared
+  variables:
+    dev:
+      region: us-east-1
+    prod:
+      region: us-east-1
+  dotenv:
+    path: .env.${self:provider.stage}
+    exclude:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_REGION_NAME
+      - AWS_SESSION_TOKEN
+  prune:
+    automatic: true
+    number: 3
+
+provider:
+  name: aws
+  runtime: provided.al2
+  region: ${self:custom.variables.${self:provider.stage}.region}
+  profile: ${self:custom.prefix}-${self:custom.stage}
+  stage: ${self:custom.stage}
+  stackName: ${self:custom.serviceName}
+  timeout: 30
+  memorySize: 512
+  architecture: x86_64
+  apiGateway:
+    restApiId:
+      Fn::ImportValue: MainApiGatewayId
+    restApiRootResourceId:
+      Fn::ImportValue: MainApiGatewayRootResourceId
+  deploymentBucket:
+    name: ${self:custom.appBucketShared}
+  stackTags:
+    NAME: ${self:custom.serviceName}
+  iam:
+    role:
+      name: ${self:custom.roleName}
+      tags:
+        NAME: ${self:custom.roleName}
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:GetItem
+            - dynamodb:Query
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - Fn::ImportValue:
+                Fn::Sub: CandidatesTableArn
+            - !Sub
+              - "${PREFIX}/index/*"
+              - PREFIX: !ImportValue
+                  Fn::Sub: CandidatesTableArn
+
+plugins:
+  - serverless-deployment-bucket
+  - serverless-prune-plugin
+  - serverless-dotenv-plugin
+
+package:
+  individually: true
+  exclude:
+    - ./**
+  include:
+    - bin/**
+
+functions:
+  api:
+    handler: main
+    name: ${self:custom.prefixLambdaName}-api
+    tags:
+      NAME: ${self:custom.prefixLambdaName}-api
+    package:
+      artifact: bin/main.zip
+    events:
+      - http:
+          path: /${self:custom.stackName}/
+          method: get
+          cors: true
+
+      - http:
+          path: /${self:custom.stackName}/
+          method: post
+          cors: true
+
+      - http:
+          path: /${self:custom.stackName}/{proxy+}
+          method: any
+          cors: true
