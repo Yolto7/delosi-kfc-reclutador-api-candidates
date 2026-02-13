@@ -22,6 +22,7 @@ import (
 type CreateServiceInput struct {
 	ID                                string `json:"id" validate:"required,notblank"`
 	SheetID                           string `json:"sheetId" validate:"required,notblank"`
+	RowID                             string `json:"rowId" validate:"required,notblank"`
 	ColumnPostulantResponseId         string `json:"columnPostulantResponseId" validate:"required,notblank"`
 	ColumnPostulantDateTimeResponseId string `json:"columnPostulantDateTimeResponseId" validate:"required,notblank"`
 	ColumnPostulantConfirmedId        string `json:"columnPostulantConfirmedId" validate:"required,notblank"`
@@ -80,6 +81,7 @@ func (svc *CreateService) Execute(ctx context.Context, input *CreateServiceInput
 		ID:                                input.ID,
 		CompositeKey:                      compositeKey,
 		SheetID:                           input.SheetID,
+		RowID:                             input.RowID,
 		ColumnPostulantResponseId:         input.ColumnPostulantResponseId,
 		ColumnPostulantDateTimeResponseId: input.ColumnPostulantDateTimeResponseId,
 		ColumnPostulantConfirmedId:        input.ColumnPostulantConfirmedId,
