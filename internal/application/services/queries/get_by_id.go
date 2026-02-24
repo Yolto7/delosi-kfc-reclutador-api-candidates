@@ -21,6 +21,9 @@ type GetByIDServiceOutput struct {
 	ColumnPostulantResponseId         string `json:"columnPostulantResponseId"`
 	ColumnPostulantDateTimeResponseId string `json:"columnPostulantDateTimeResponseId"`
 	ColumnPostulantConfirmedId        string `json:"columnPostulantConfirmedId"`
+	ColumnInterviewDateId             string `json:"columnInterviewDateId"`
+	ColumnInterviewTimeId             string `json:"columnInterviewTimeId"`
+	ColumnInterviewLinkId             string `json:"columnInterviewLinkId"`
 }
 
 type GetByIDService struct {
@@ -56,5 +59,8 @@ func (svc *GetByIDService) Execute(ctx context.Context, input GetByIDServiceInpu
 		ColumnPostulantResponseId:         candidate.ColumnPostulantResponseId,
 		ColumnPostulantDateTimeResponseId: candidate.ColumnPostulantDateTimeResponseId,
 		ColumnPostulantConfirmedId:        candidate.ColumnPostulantConfirmedId,
+		ColumnInterviewDateId:             candidate.ColumnInterviewDateId,
+		ColumnInterviewTimeId:             candidate.ColumnInterviewTimeId,
+		ColumnInterviewLinkId:             candidate.ColumnInterviewLinkId,
 	}, nil
 }

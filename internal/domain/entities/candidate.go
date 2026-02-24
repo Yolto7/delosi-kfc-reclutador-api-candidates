@@ -11,6 +11,9 @@ type Candidate struct {
 	ColumnPostulantResponseId         string `json:"columnPostulantResponseId" dynamodbav:"columnPostulantResponseId"`
 	ColumnPostulantDateTimeResponseId string `json:"columnPostulantDateTimeResponseId" dynamodbav:"columnPostulantDateTimeResponseId"`
 	ColumnPostulantConfirmedId        string `json:"columnPostulantConfirmedId" dynamodbav:"columnPostulantConfirmedId"`
+	ColumnInterviewDateId             string `json:"columnInterviewDateId" dynamodbav:"columnInterviewDateId"`
+	ColumnInterviewTimeId             string `json:"columnInterviewTimeId" dynamodbav:"columnInterviewTimeId"`
+	ColumnInterviewLinkId             string `json:"columnInterviewLinkId" dynamodbav:"columnInterviewLinkId"`
 
 	CreatedAt string  `json:"createdAt" dynamodbav:"createdAt"`
 	CreatedBy string  `json:"createdBy" dynamodbav:"createdBy"`

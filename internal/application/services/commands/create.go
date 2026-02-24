@@ -29,6 +29,9 @@ type CreateServiceInput struct {
 	ColumnPostulantResponseId         string `json:"columnPostulantResponseId" validate:"required,notblank"`
 	ColumnPostulantDateTimeResponseId string `json:"columnPostulantDateTimeResponseId" validate:"required,notblank"`
 	ColumnPostulantConfirmedId        string `json:"columnPostulantConfirmedId" validate:"required,notblank"`
+	ColumnInterviewDateId             string `json:"columnInterviewDateId" validate:"required,notblank"`
+	ColumnInterviewTimeId             string `json:"columnInterviewTimeId" validate:"required,notblank"`
+	ColumnInterviewLinkId             string `json:"columnInterviewLinkId" validate:"required,notblank"`
 }
 
 // CreateServiceOutput represents the output of candidate create operation
@@ -91,6 +94,9 @@ func (svc *CreateService) Execute(ctx context.Context, input *CreateServiceInput
 		ColumnPostulantResponseId:         input.ColumnPostulantResponseId,
 		ColumnPostulantDateTimeResponseId: input.ColumnPostulantDateTimeResponseId,
 		ColumnPostulantConfirmedId:        input.ColumnPostulantConfirmedId,
+		ColumnInterviewDateId:             input.ColumnInterviewDateId,
+		ColumnInterviewTimeId:             input.ColumnInterviewTimeId,
+		ColumnInterviewLinkId:             input.ColumnInterviewLinkId,
 		CreatedAt:                         pkgIUtils.NowDateTime("America/Lima"),
 		CreatedBy:                         constants.SYSTEM_USER,
 		Deleted:                           false,
