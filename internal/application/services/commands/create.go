@@ -8,9 +8,7 @@ import (
 	"github.com/Yolto7/api-candidates/internal/domain/entities"
 	"github.com/Yolto7/api-candidates/internal/domain/repositories"
 	"github.com/Yolto7/api-candidates/pkg/domain/constants"
-	errorCustom "github.com/Yolto7/api-candidates/pkg/domain/error"
 	"github.com/Yolto7/api-candidates/pkg/domain/logger"
-	"github.com/Yolto7/api-candidates/pkg/infrastructure/utils"
 	pkgIUtils "github.com/Yolto7/api-candidates/pkg/infrastructure/utils"
 )
 
@@ -72,20 +70,10 @@ func NewCreateService(cfg CreateServiceConfig) *CreateService {
 // Execute performs an optimized create operation on candidate
 // Returns error if validation fails or repository operations fail
 func (svc *CreateService) Execute(ctx context.Context, input *CreateServiceInput) (*CreateServiceOutput, error) {
-	compositeKey := fmt.Sprintf("%s#%s", input.ID, input.SheetID)
-
-	exists, err := svc.candidateRepository.GetByCompositeKey(ctx, compositeKey)
-	if err != nil {
-		return nil, err
-	}
-	if exists != nil {
-		svc.logger.Error(utils.NewSafeError(err, "Candidate with ID already exists"))
-		return nil, errorCustom.NewError(errorCustom.BAD_REQUEST, "Candidate already exists", "ERR_CANDIDATE_EXISTS")
-	}
 
 	candidate := &entities.Candidate{
 		ID:                                input.ID,
-		CompositeKey:                      compositeKey,
+		CompositeKey:                      fmt.Sprintf("%s#%s", input.ID, input.SheetID),
 		SheetID:                           input.SheetID,
 		RowID:                             input.RowID,
 		ColumnPostulantSuitableId:         input.ColumnPostulantSuitableId,

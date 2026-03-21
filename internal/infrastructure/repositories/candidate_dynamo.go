@@ -56,33 +56,6 @@ func (r *CandidateDynamoRepository) GetByID(ctx context.Context, id string) (*en
 	return &candidate, nil
 }
 
-func (r *CandidateDynamoRepository) GetByCompositeKey(ctx context.Context, compositeKey string) (*entities.Candidate, error) {
-	res, err := r.client.Query(ctx, &dynamodb.QueryInput{
-		TableName:              aws.String(r.table),
-		IndexName:              aws.String("GSI-Candidates-CompositeKey"),
-		KeyConditionExpression: aws.String("compositeKey = :ck"),
-		ExpressionAttributeValues: map[string]types.AttributeValue{
-			":ck": &types.AttributeValueMemberS{Value: compositeKey},
-		},
-	})
-	if err != nil {
-		r.logger.Error(utils.NewSafeError(err, "Error in CandidateRepository.GetByCompositeKey: Failed to query candidate"))
-		return nil, errorCustom.NewError(errorCustom.BAD_REQUEST, "Failed to get candidate data", "DATABASE_ERROR")
-	}
-
-	if len(res.Items) == 0 {
-		return nil, nil
-	}
-
-	var candidate entities.Candidate
-	if err := attributevalue.UnmarshalMap(res.Items[0], &candidate); err != nil {
-		r.logger.Error(utils.NewSafeError(err, "Error in CandidateRepository.GetByCompositeKey: Failed to unmarshal candidate"))
-		return nil, errorCustom.NewError(errorCustom.BAD_REQUEST, "Failed to unmarshal candidate", "DATABASE_ERROR")
-	}
-
-	return &candidate, nil
-}
-
 func (r *CandidateDynamoRepository) Create(ctx context.Context, candidate *entities.Candidate) error {
 	item, err := attributevalue.MarshalMap(candidate)
 	if err != nil {
